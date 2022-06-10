@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    zookeeper:
+      discovery:
+        enabled: true
+      connect-string: 82.156.175.33:2181
