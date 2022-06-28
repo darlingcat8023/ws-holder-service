@@ -9,4 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 @EnableDiscoveryClient(autoRegister = true)
 public class DiscoveryConfiguration {
+
+
 }

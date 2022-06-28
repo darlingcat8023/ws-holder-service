@@ -1,6 +1,11 @@
 package com.estar.higo.holderservice.config.websocket;
 
-import com.estar.higo.holderservice.handler.ClientHandler;
+import com.estar.higo.holderservice.handler.AppClientHandler;
+import com.estar.higo.holderservice.inteceptor.ClientTokenInterceptor;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -13,11 +18,20 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
  */
 @EnableWebSocket
 @Configuration(proxyBeanMethods = false)
-public class WebSocketConfiguration implements WebSocketConfigurer {
+public class WebSocketConfiguration implements WebSocketConfigurer, BeanFactoryAware {
+
+    private AutowireCapableBeanFactory beanFactory;
+
+    @Override
+    public void setBeanFactory(@NonNull BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = (AutowireCapableBeanFactory) beanFactory;
+    }
 
     @Override
     public void registerWebSocketHandlers(@NonNull WebSocketHandlerRegistry registry) {
-        registry.addHandler(new ClientHandler(), "/ws/do");
+        registry.addHandler(this.beanFactory.createBean(AppClientHandler.class), "/ws/do")
+                .addInterceptors(this.beanFactory.createBean(ClientTokenInterceptor.class))
+                .setAllowedOrigins("*");
     }
 
 }

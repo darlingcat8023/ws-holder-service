@@ -4,3 +4,21 @@ spring:
       discovery:
         enabled: true
       connect-string: 82.156.175.33:2181
+      prefix: "higo-game"
+  redis:
+    host: 82.156.175.33
+    port: 6379
+    password: 248614740
+    lettuce:
+      pool:
+        enabled: true
+        max-active: 20
+        min-idle: 10
+
+message:
+  topics:
+    commandTopic: higo-command
+
+service:
+  gateway:
+    url: "127.0.0.1:10000"

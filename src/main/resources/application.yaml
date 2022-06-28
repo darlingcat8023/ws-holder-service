@@ -6,3 +6,10 @@ spring:
     name: higo-ws-holder-service
   profiles:
     active: @profiles.active@
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "shutdown"
