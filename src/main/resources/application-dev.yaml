@@ -5,6 +5,9 @@ spring:
         enabled: true
       connect-string: 82.156.175.33:2181
       prefix: "higo-game"
+    loadbalancer:
+      cache:
+        enabled: true
   redis:
     host: 82.156.175.33
     port: 6379
